@@ -10,7 +10,7 @@
 
 <h4>Comments</h4>
 <ul>
-    {% for comment in new.comment_set.all %}
+    {% for comment in comments %}
         <li>
             <h5>{{comment.content}}</h5>
             <p>{{comment.created_at}}</p>

@@ -5,6 +5,9 @@ class New(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     
+    def has_comments(self):
+        return len(self.comment_set.all()) != 0
+
     def __str__(self) -> str:
         return self.title
     

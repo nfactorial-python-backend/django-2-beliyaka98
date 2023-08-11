@@ -12,7 +12,8 @@ def detail(request, id):
         comment_new = Comment(content=request.POST["content"], new=data_new)
         comment_new.save()
         return redirect("detail", id=data_new.id)
-    return render(request, "news/detail.html", {"new": data_new})
+    context = {"new": data_new, "comments": data_new.comment_set.all().order_by("-created_at")}
+    return render(request, "news/detail.html", context = context)
 
 def create_new(request):
     if request.method == 'POST':
