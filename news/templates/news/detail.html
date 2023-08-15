@@ -1,3 +1,10 @@
+{% extends 'news/base.html' %}
+{% block 'title' %}
+    Detail {{new.id}}
+{% endblock %}
+
+{% block 'content' %}
+
 <h3>
     {{new.title}}
 </h3>
@@ -23,3 +30,12 @@
     Content: <input type="text" name="content">
     <input type="submit" value="Submit">
 </form>
+
+<a href="{% url 'edit' new.id%}"> EDIT </a>
+<br>
+<a href="{% url 'news'%}">All news</a>
+
+
+{% endblock %}
+
+

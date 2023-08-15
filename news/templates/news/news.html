@@ -1,4 +1,9 @@
-<body>
+{% extends 'news/base.html' %}
+{% block 'title' %}
+    All news
+{% endblock %}
+
+{% block 'content' %}
     <ul>
         {% for new in news %}
             <li>
@@ -7,4 +12,4 @@
         {% endfor %}
     </ul>
     <a href="{% url 'create_new' %}">Create new news</a>
-</body>
+{% endblock %}

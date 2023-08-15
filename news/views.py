@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-
+from django.views import View
 from .models import New, Comment
+from .forms import NewsForm
 
 def news(request):
     data_news = New.objects.all().order_by("-created_at")
@@ -17,7 +18,21 @@ def detail(request, id):
 
 def create_new(request):
     if request.method == 'POST':
-        data_new = New(title=request.POST["title"], content=request.POST["content"])
-        data_new.save()
-        return redirect("detail", id=data_new.id)
-    return render(request, "news/create.html")
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("detail", id=form.instance.id)
+    form = NewsForm()
+    return render(request, "news/create.html", {"form": form})
+
+class EditView(View):
+    def get(self, request, id: int):
+        new = get_object_or_404(New, id=id)
+        form = NewsForm(instance=new)
+        return render(request, "news/edit.html", {"form": form})
+    def post(self, request, id: int):
+        new = get_object_or_404(New, id=id)
+        form = NewsForm(request.POST, instance=new)
+        if form.is_valid():
+            form.save()
+            return redirect("detail", id=form.instance.id)
